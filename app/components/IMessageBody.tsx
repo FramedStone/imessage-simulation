@@ -67,64 +67,14 @@ export default function IMessageBody({
               message.sender === "user" ? "justify-end" : "justify-start"
             } mb-4`}
           >
-            <div className="relative max-w-[70%]">
-              <div
-                className={`py-2 px-4 ${
-                  message.sender === "user"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-black"
-                }`}
-                style={{
-                  borderRadius: "18px",
-                  ...(message.sender === "user"
-                    ? { borderBottomRightRadius: "4px" }
-                    : { borderBottomLeftRadius: "4px" }),
-                }}
-              >
-                <p>{message.text}</p>
-              </div>
-              {message.sender === "user" && (
-                <div
-                  className="absolute bottom-0 right-0"
-                  style={{
-                    width: "10px",
-                    height: "20px",
-                    overflow: "hidden",
-                    right: "-10px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      backgroundColor: "#3b82f6",
-                      borderBottomLeftRadius: "16px",
-                      transform: "translateX(-10px)",
-                    }}
-                  />
-                </div>
-              )}
-              {message.sender === "other" && (
-                <div
-                  className="absolute bottom-0 left-0"
-                  style={{
-                    width: "10px",
-                    height: "20px",
-                    overflow: "hidden",
-                    left: "-10px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      backgroundColor: "#e5e7eb",
-                      borderBottomRightRadius: "16px",
-                      transform: "translateX(0)",
-                    }}
-                  />
-                </div>
-              )}
+            <div
+              className={`py-2 px-4 max-w-[70%] rounded-3xl ${
+                message.sender === "user"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-black"
+              }`}
+            >
+              <p>{message.text}</p>
             </div>
           </div>
         ))}
