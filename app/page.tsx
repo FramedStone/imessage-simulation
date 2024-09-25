@@ -69,12 +69,9 @@ export default function Home() {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = (e: ProgressEvent<FileReader>) => {
         if (e.target && typeof e.target.result === "string") {
-          setIcons((prev) => ({
-            ...prev,
-            [iconType]: e.target.result as string,
-          }));
+          setIcons((prev) => ({ ...prev, [iconType]: e.target.result }));
         }
       };
       reader.readAsDataURL(file);
