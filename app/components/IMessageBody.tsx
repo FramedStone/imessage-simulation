@@ -9,11 +9,15 @@ interface Message {
   sender: "user" | "other";
 }
 
-export default function IMessageBody() {
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: "hi", sender: "other" },
-    { id: 2, text: "hi", sender: "user" },
-  ]);
+interface IMessageBodyProps {
+  onSendMessage: (text: string, sender: "user") => void;
+  messages: Message[];
+}
+
+export default function IMessageBody({
+  onSendMessage,
+  messages,
+}: IMessageBodyProps) {
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -25,10 +29,7 @@ export default function IMessageBody() {
 
   const handleSendMessage = () => {
     if (inputText.trim()) {
-      setMessages([
-        ...messages,
-        { id: messages.length + 1, text: inputText, sender: "user" },
-      ]);
+      onSendMessage(inputText, "user");
       setInputText("");
     }
   };

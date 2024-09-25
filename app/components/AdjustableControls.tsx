@@ -12,21 +12,27 @@ interface AdjustableControlsProps {
   };
   inputFieldOffset: number;
   chevronRightPadding: number;
+  otherSenderMessage: string;
   handlePaddingChange: (key: string, value: number) => void;
   handleInputFieldOffsetChange: (value: number) => void;
   handleChevronRightPaddingChange: (value: number) => void;
+  handleOtherSenderMessageChange: (message: string) => void;
+  handleSendOtherMessage: () => void;
 }
 
 export default function AdjustableControls({
   statusBarPadding,
   inputFieldOffset,
   chevronRightPadding,
+  otherSenderMessage,
   handlePaddingChange,
   handleInputFieldOffsetChange,
   handleChevronRightPaddingChange,
+  handleOtherSenderMessageChange,
+  handleSendOtherMessage,
 }: AdjustableControlsProps) {
   return (
-    <div className="w-64 p-4 bg-white shadow-lg">
+    <div className="w-64 p-4 bg-white shadow-lg overflow-y-auto h-screen">
       <h3 className="text-lg font-semibold mb-2 text-gray-800">
         Adjust Status Bar Padding
       </h3>
@@ -83,6 +89,24 @@ export default function AdjustableControls({
         <span className="ml-2 w-8 text-right text-gray-700">
           {chevronRightPadding}px
         </span>
+      </div>
+      <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
+        Other Sender Message
+      </h3>
+      <div className="flex flex-col mb-2">
+        <input
+          type="text"
+          value={otherSenderMessage}
+          onChange={(e) => handleOtherSenderMessageChange(e.target.value)}
+          placeholder="Type a message for 'other'"
+          className="w-full p-2 border rounded mb-2 text-black placeholder-gray-500"
+        />
+        <button
+          onClick={handleSendOtherMessage}
+          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+        >
+          Send as 'Other'
+        </button>
       </div>
     </div>
   );
