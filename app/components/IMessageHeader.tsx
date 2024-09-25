@@ -7,7 +7,7 @@ export default function IMessageHeader() {
   const [time, setTime] = useState("12:09");
   const [timeIcon, setTimeIcon] = useState<string | null>(null);
   const [profileIcon, setProfileIcon] = useState<string | null>(null);
-  const [contactName, setContactName] = useState("Hong");
+  const [contactName, setContactName] = useState("Example");
   const [signalIcon, setSignalIcon] = useState<string | null>(null);
   const [wifiIcon, setWifiIcon] = useState<string | null>(null);
   const [batteryIcon, setBatteryIcon] = useState<string | null>(null);
@@ -201,7 +201,7 @@ export default function IMessageHeader() {
                 className="w-full h-full rounded-full object-cover"
               />
             ) : (
-              "HJ"
+              "AA"
             )}
           </div>
           <input
