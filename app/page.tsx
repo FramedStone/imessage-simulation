@@ -93,8 +93,10 @@ export default function Home() {
     setStatusBarTimestamp(timestamp);
   };
 
-  const handleMessageTimestampChange = (date: Date) => {
-    setMessageTimestamp(date);
+  const handleMessageTimestampChange = (date: Date | null) => {
+    if (date) {
+      setMessageTimestamp(date);
+    }
   };
 
   return (
