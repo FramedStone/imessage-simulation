@@ -104,14 +104,14 @@ export default function AdjustableControls({
           type="text"
           value={otherSenderMessage}
           onChange={(e) => handleOtherSenderMessageChange(e.target.value)}
-          placeholder="Type a message for 'other'"
+          placeholder="Type a message for &rsquo;other&rsquo;"
           className="w-full p-2 border rounded mb-2 text-black placeholder-gray-500"
         />
         <button
           onClick={handleSendOtherMessage}
           className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         >
-          Send as 'Other'
+          Send as &rsquo;Other&rsquo;
         </button>
       </div>
       <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
