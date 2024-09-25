@@ -41,6 +41,8 @@ export default function Home() {
     wifi: null,
     battery: null,
   });
+  const [statusBarTimestamp, setStatusBarTimestamp] = useState("12:09");
+  const [messageTimestamp, setMessageTimestamp] = useState(new Date());
 
   const handlePaddingChange = (key: string, value: number) => {
     setStatusBarPadding((prev) => ({ ...prev, [key]: value }));
@@ -87,6 +89,14 @@ export default function Home() {
     }
   };
 
+  const handleStatusBarTimestampChange = (timestamp: string) => {
+    setStatusBarTimestamp(timestamp);
+  };
+
+  const handleMessageTimestampChange = (date: Date) => {
+    setMessageTimestamp(date);
+  };
+
   return (
     <main className="flex h-screen">
       <AdjustableControls
@@ -94,12 +104,16 @@ export default function Home() {
         inputFieldOffset={inputFieldOffset}
         chevronRightPadding={chevronRightPadding}
         otherSenderMessage={otherSenderMessage}
+        statusBarTimestamp={statusBarTimestamp}
+        messageTimestamp={messageTimestamp}
         handlePaddingChange={handlePaddingChange}
         handleInputFieldOffsetChange={handleInputFieldOffsetChange}
         handleChevronRightPaddingChange={handleChevronRightPaddingChange}
         handleOtherSenderMessageChange={handleOtherSenderMessageChange}
         handleSendOtherMessage={handleSendOtherMessage}
         handleIconUpload={handleIconUpload}
+        handleStatusBarTimestampChange={handleStatusBarTimestampChange}
+        handleMessageTimestampChange={handleMessageTimestampChange}
       />
       <div className="flex-1 flex flex-col">
         <IMessageHeader
@@ -107,8 +121,13 @@ export default function Home() {
           inputFieldOffset={inputFieldOffset}
           chevronRightPadding={chevronRightPadding}
           icons={icons}
+          statusBarTimestamp={statusBarTimestamp}
         />
-        <IMessageBody onSendMessage={handleSendMessage} messages={messages} />
+        <IMessageBody
+          onSendMessage={handleSendMessage}
+          messages={messages}
+          messageTimestamp={messageTimestamp}
+        />
       </div>
     </main>
   );

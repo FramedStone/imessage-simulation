@@ -20,6 +20,7 @@ interface IMessageHeaderProps {
     wifi: string | null;
     battery: string | null;
   };
+  statusBarTimestamp: string;
 }
 
 export default function IMessageHeader({
@@ -27,8 +28,8 @@ export default function IMessageHeader({
   inputFieldOffset,
   chevronRightPadding,
   icons,
+  statusBarTimestamp,
 }: IMessageHeaderProps) {
-  const [time, setTime] = useState("12:09");
   const [contactName, setContactName] = useState("Hong");
   const [inputWidth, setInputWidth] = useState(0);
 
@@ -44,10 +45,6 @@ export default function IMessageHeader({
     setContactName(e.target.value);
   };
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTime(e.target.value);
-  };
-
   return (
     <div className="bg-gradient-to-b from-gray-200 to-gray-100">
       {/* Status Bar */}
@@ -61,12 +58,9 @@ export default function IMessageHeader({
           className="flex items-center"
           style={{ gap: `${statusBarPadding.between}px` }}
         >
-          <input
-            type="text"
-            value={time}
-            onChange={handleTimeChange}
-            className="w-10 bg-transparent font-medium outline-none text-gray-800"
-          />
+          <span className="w-10 bg-transparent font-medium outline-none text-gray-800">
+            {statusBarTimestamp}
+          </span>
           <div className="w-4 h-4 flex items-center justify-center">
             {icons.paperPlane ? (
               <img

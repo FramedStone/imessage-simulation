@@ -1,7 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Icons } from "../page";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface AdjustableControlsProps {
   statusBarPadding: {
@@ -14,6 +16,8 @@ interface AdjustableControlsProps {
   inputFieldOffset: number;
   chevronRightPadding: number;
   otherSenderMessage: string;
+  statusBarTimestamp: string;
+  messageTimestamp: Date;
   handlePaddingChange: (key: string, value: number) => void;
   handleInputFieldOffsetChange: (value: number) => void;
   handleChevronRightPaddingChange: (value: number) => void;
@@ -23,6 +27,8 @@ interface AdjustableControlsProps {
     event: React.ChangeEvent<HTMLInputElement>,
     iconType: keyof Icons
   ) => void;
+  handleStatusBarTimestampChange: (timestamp: string) => void;
+  handleMessageTimestampChange: (date: Date) => void;
 }
 
 export default function AdjustableControls({
@@ -30,13 +36,22 @@ export default function AdjustableControls({
   inputFieldOffset,
   chevronRightPadding,
   otherSenderMessage,
+  statusBarTimestamp,
+  messageTimestamp,
   handlePaddingChange,
   handleInputFieldOffsetChange,
   handleChevronRightPaddingChange,
   handleOtherSenderMessageChange,
   handleSendOtherMessage,
   handleIconUpload,
+  handleStatusBarTimestampChange,
+  handleMessageTimestampChange,
 }: AdjustableControlsProps) {
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
+  const openDatePicker = () => setIsDatePickerOpen(true);
+  const closeDatePicker = () => setIsDatePickerOpen(false);
+
   return (
     <div className="w-64 p-4 bg-white shadow-lg overflow-y-auto h-screen">
       <h3 className="text-lg font-semibold mb-2 text-gray-800">
@@ -104,14 +119,14 @@ export default function AdjustableControls({
           type="text"
           value={otherSenderMessage}
           onChange={(e) => handleOtherSenderMessageChange(e.target.value)}
-          placeholder="Type a message for &rsquo;other&rsquo;"
+          placeholder="Type a message for 'other'"
           className="w-full p-2 border rounded mb-2 text-black placeholder-gray-500"
         />
         <button
           onClick={handleSendOtherMessage}
           className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         >
-          Send as &rsquo;Other&rsquo;
+          Send as 'Other'
         </button>
       </div>
       <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
@@ -138,6 +153,55 @@ export default function AdjustableControls({
           )
         )}
       </div>
+      <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
+        Status Bar Timestamp
+      </h3>
+      <div className="flex items-center mb-2">
+        <input
+          type="text"
+          value={statusBarTimestamp}
+          onChange={(e) => handleStatusBarTimestampChange(e.target.value)}
+          placeholder="Enter status bar timestamp"
+          className="w-full p-2 border rounded text-black placeholder-gray-500"
+        />
+      </div>
+      <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
+        Message Timestamp
+      </h3>
+      <div className="flex items-center mb-2">
+        <button
+          onClick={openDatePicker}
+          className="w-full p-2 border rounded text-black bg-white hover:bg-gray-100"
+        >
+          {messageTimestamp.toLocaleString()}
+        </button>
+      </div>
+
+      {isDatePickerOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <DatePicker
+              selected={messageTimestamp}
+              onChange={(date: Date) => {
+                handleMessageTimestampChange(date);
+                closeDatePicker();
+              }}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+              inline
+            />
+            <button
+              onClick={closeDatePicker}
+              className="mt-4 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
