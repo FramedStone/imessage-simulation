@@ -23,6 +23,14 @@ interface IMessageHeaderProps {
   statusBarTimestamp: string;
 }
 
+const DynamicIsland: React.FC = () => {
+  return (
+    <div className="bg-black rounded-full h-7 w-32 flex items-center justify-center">
+      {/* Dynamic Island content */}
+    </div>
+  );
+};
+
 export default function IMessageHeader({
   statusBarPadding,
   inputFieldOffset,
@@ -52,7 +60,7 @@ export default function IMessageHeader({
         style={{
           padding: `${statusBarPadding.top}px ${statusBarPadding.right}px ${statusBarPadding.bottom}px ${statusBarPadding.left}px`,
         }}
-        className="flex justify-between items-center text-gray-800 text-sm font-medium"
+        className="flex justify-between items-center text-gray-800 text-sm font-medium relative"
       >
         <div
           className="flex items-center"
@@ -72,6 +80,9 @@ export default function IMessageHeader({
               <Camera size={16} className="text-gray-600" />
             )}
           </div>
+        </div>
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <DynamicIsland />
         </div>
         <div
           className="flex items-center"
@@ -114,7 +125,7 @@ export default function IMessageHeader({
       </div>
 
       {/* Conversation Header */}
-      <div className="px-4 py-2 flex items-center space-x-4">
+      <div className="px-4 py-4 flex items-center space-x-4">
         <ChevronLeft className="text-blue-500 w-6 h-6" />
         <div className="flex flex-col items-center flex-grow">
           <div className="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center text-xl font-semibold text-white mb-1">
