@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Icons } from "../page";
 
 interface AdjustableControlsProps {
   statusBarPadding: {
@@ -20,7 +21,7 @@ interface AdjustableControlsProps {
   handleSendOtherMessage: () => void;
   handleIconUpload: (
     event: React.ChangeEvent<HTMLInputElement>,
-    iconType: string
+    iconType: keyof Icons
   ) => void;
 }
 
@@ -103,21 +104,21 @@ export default function AdjustableControls({
           type="text"
           value={otherSenderMessage}
           onChange={(e) => handleOtherSenderMessageChange(e.target.value)}
-          placeholder="Type a message for &rsquo;other&rsquo;"
+          placeholder="Type a message for 'other'"
           className="w-full p-2 border rounded mb-2 text-black placeholder-gray-500"
         />
         <button
           onClick={handleSendOtherMessage}
           className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         >
-          Send as &rsquo;Other&rsquo;
+          Send as 'Other'
         </button>
       </div>
       <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
         Upload Status Icons
       </h3>
       <div className="flex flex-col space-y-2">
-        {["paperPlane", "profile", "signal", "wifi", "battery"].map(
+        {(["paperPlane", "profile", "signal", "wifi", "battery"] as const).map(
           (iconType) => (
             <div key={iconType} className="flex items-center">
               <label

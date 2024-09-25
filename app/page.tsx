@@ -11,6 +11,14 @@ interface Message {
   sender: "user" | "other";
 }
 
+export interface Icons {
+  paperPlane: string | null;
+  profile: string | null;
+  signal: string | null;
+  wifi: string | null;
+  battery: string | null;
+}
+
 export default function Home() {
   const [statusBarPadding, setStatusBarPadding] = useState({
     left: 20,
@@ -26,7 +34,7 @@ export default function Home() {
     { id: 1, text: "hi", sender: "other" },
     { id: 2, text: "hi", sender: "user" },
   ]);
-  const [icons, setIcons] = useState({
+  const [icons, setIcons] = useState<Icons>({
     paperPlane: null,
     profile: null,
     signal: null,
@@ -64,14 +72,15 @@ export default function Home() {
 
   const handleIconUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
-    iconType: string
+    iconType: keyof Icons
   ) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        if (e.target && typeof e.target.result === "string") {
-          setIcons((prev) => ({ ...prev, [iconType]: e.target.result }));
+        const target = e.target;
+        if (target && target.result && typeof target.result === "string") {
+          setIcons((prev) => ({ ...prev, [iconType]: target.result }));
         }
       };
       reader.readAsDataURL(file);
