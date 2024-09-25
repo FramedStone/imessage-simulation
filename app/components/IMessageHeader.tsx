@@ -30,7 +30,7 @@ export default function IMessageHeader({
   icons,
   statusBarTimestamp,
 }: IMessageHeaderProps) {
-  const [contactName, setContactName] = useState("Hong");
+  const [contactName, setContactName] = useState("Her");
   const [inputWidth, setInputWidth] = useState(0);
 
   const contactNameInputRef = useRef<HTMLInputElement>(null);
