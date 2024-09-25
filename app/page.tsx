@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AdjustableControls from "./components/AdjustableControls";
 import IMessageHeader from "./components/IMessageHeader";
 import IMessageBody from "./components/IMessageBody";
+import IPhoneWrapper from "./components/IPhoneWrapper";
 
 interface Message {
   id: number;
@@ -130,20 +131,22 @@ export default function Home() {
         handleMessageTimestampChange={handleMessageTimestampChange}
         handleMessageDeliveryToggle={handleMessageDeliveryToggle}
       />
-      <div className="flex-1 flex flex-col">
-        <IMessageHeader
-          statusBarPadding={statusBarPadding}
-          inputFieldOffset={inputFieldOffset}
-          chevronRightPadding={chevronRightPadding}
-          icons={icons}
-          statusBarTimestamp={statusBarTimestamp}
-        />
-        <IMessageBody
-          onSendMessage={handleSendMessage}
-          messages={messages}
-          messageTimestamp={messageTimestamp}
-        />
-      </div>
+      <IPhoneWrapper>
+        <div className="flex-1 flex flex-col h-full">
+          <IMessageHeader
+            statusBarPadding={statusBarPadding}
+            inputFieldOffset={inputFieldOffset}
+            chevronRightPadding={chevronRightPadding}
+            icons={icons}
+            statusBarTimestamp={statusBarTimestamp}
+          />
+          <IMessageBody
+            onSendMessage={handleSendMessage}
+            messages={messages}
+            messageTimestamp={messageTimestamp}
+          />
+        </div>
+      </IPhoneWrapper>
     </main>
   );
 }

@@ -108,7 +108,7 @@ export default function IMessageBody({
         </AnimatePresence>
         <div ref={messagesEndRef} />
       </div>
-      <div className="p-4 border-t">
+      <div className="p-3 pb-5 border-t">
         <div className="flex items-center bg-gray-100 rounded-full">
           <button className="p-2 rounded-full hover:bg-gray-200">
             <Plus className="w-6 h-6 text-blue-500" />
