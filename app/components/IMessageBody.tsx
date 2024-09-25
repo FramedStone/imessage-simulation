@@ -85,7 +85,7 @@ export default function IMessageBody() {
             onChange={(e) => setInputText(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="iMessage"
-            className="flex-1 bg-transparent py-2 px-4 outline-none"
+            className="flex-1 bg-transparent py-2 px-4 outline-none text-black placeholder-gray-500"
           />
           {inputText ? (
             <button

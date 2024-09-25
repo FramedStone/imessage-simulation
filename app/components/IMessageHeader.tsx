@@ -3,25 +3,31 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Video, Camera } from "lucide-react";
 
-export default function IMessageHeader() {
+interface IMessageHeaderProps {
+  statusBarPadding: {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    between: number;
+  };
+  inputFieldOffset: number;
+  chevronRightPadding: number;
+}
+
+export default function IMessageHeader({
+  statusBarPadding,
+  inputFieldOffset,
+  chevronRightPadding,
+}: IMessageHeaderProps) {
   const [time, setTime] = useState("12:09");
   const [timeIcon, setTimeIcon] = useState<string | null>(null);
   const [profileIcon, setProfileIcon] = useState<string | null>(null);
-  const [contactName, setContactName] = useState("Example");
+  const [contactName, setContactName] = useState("Hong");
   const [signalIcon, setSignalIcon] = useState<string | null>(null);
   const [wifiIcon, setWifiIcon] = useState<string | null>(null);
   const [batteryIcon, setBatteryIcon] = useState<string | null>(null);
   const [inputWidth, setInputWidth] = useState(0);
-
-  const [statusBarPadding, setStatusBarPadding] = useState({
-    left: 20,
-    right: 16,
-    top: 20,
-    bottom: 2,
-    between: 5,
-  });
-  const [inputFieldOffset, setInputFieldOffset] = useState(0);
-  const [chevronRightPadding, setChevronRightPadding] = useState(0);
 
   const timeIconInputRef = useRef<HTMLInputElement>(null);
   const profileIconInputRef = useRef<HTMLInputElement>(null);
@@ -60,23 +66,8 @@ export default function IMessageHeader() {
     setTime(e.target.value);
   };
 
-  const handlePaddingChange = (
-    key: keyof typeof statusBarPadding,
-    value: number
-  ) => {
-    setStatusBarPadding((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const handleInputFieldOffsetChange = (value: number) => {
-    setInputFieldOffset(value);
-  };
-
-  const handleChevronRightPaddingChange = (value: number) => {
-    setChevronRightPadding(value);
-  };
-
   return (
-    <div className="max-w-md mx-auto bg-gradient-to-b from-gray-200 to-gray-100">
+    <div className="bg-gradient-to-b from-gray-200 to-gray-100">
       {/* Status Bar */}
       <div
         style={{
@@ -201,7 +192,7 @@ export default function IMessageHeader() {
                 className="w-full h-full rounded-full object-cover"
               />
             ) : (
-              "AA"
+              "HJ"
             )}
           </div>
           <input
@@ -233,72 +224,6 @@ export default function IMessageHeader() {
           </div>
         </div>
         <Video className="text-blue-500 w-6 h-6" />
-      </div>
-
-      {/* Padding and Placement Controls */}
-      <div className="mt-4 p-4 bg-white rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-2 text-gray-800">
-          Adjust Status Bar Padding
-        </h3>
-        {Object.entries(statusBarPadding).map(([key, value]) => (
-          <div key={key} className="flex items-center mb-2">
-            <label className="w-24 text-gray-700">
-              {key.charAt(0).toUpperCase() + key.slice(1)}:
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="40"
-              value={value}
-              onChange={(e) =>
-                handlePaddingChange(
-                  key as keyof typeof statusBarPadding,
-                  parseInt(e.target.value)
-                )
-              }
-              className="w-full"
-            />
-            <span className="ml-2 w-8 text-right text-gray-700">{value}px</span>
-          </div>
-        ))}
-        <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
-          Adjust Input Field Placement
-        </h3>
-        <div className="flex items-center mb-2">
-          <label className="w-24 text-gray-700">Horizontal Offset:</label>
-          <input
-            type="range"
-            min="-50"
-            max="50"
-            value={inputFieldOffset}
-            onChange={(e) =>
-              handleInputFieldOffsetChange(parseInt(e.target.value))
-            }
-            className="w-full"
-          />
-          <span className="ml-2 w-8 text-right text-gray-700">
-            {inputFieldOffset}px
-          </span>
-        </div>
-        <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
-          Adjust ChevronRight Icon
-        </h3>
-        <div className="flex items-center mb-2">
-          <label className="w-24 text-gray-700">Padding:</label>
-          <input
-            type="range"
-            min="-20"
-            max="20"
-            value={chevronRightPadding}
-            onChange={(e) =>
-              handleChevronRightPaddingChange(parseInt(e.target.value))
-            }
-            className="w-full"
-          />
-          <span className="ml-2 w-8 text-right text-gray-700">
-            {chevronRightPadding}px
-          </span>
-        </div>
       </div>
     </div>
   );
