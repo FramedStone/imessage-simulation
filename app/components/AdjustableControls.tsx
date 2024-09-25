@@ -28,7 +28,7 @@ interface AdjustableControlsProps {
     iconType: keyof Icons
   ) => void;
   handleStatusBarTimestampChange: (timestamp: string) => void;
-  handleMessageTimestampChange: (date: Date) => void;
+  handleMessageTimestampChange: (date: Date | null) => void;
 }
 
 export default function AdjustableControls({
@@ -182,9 +182,11 @@ export default function AdjustableControls({
           <div className="bg-white p-4 rounded-lg shadow-lg">
             <DatePicker
               selected={messageTimestamp}
-              onChange={(date: Date) => {
-                handleMessageTimestampChange(date);
-                closeDatePicker();
+              onChange={(date: Date | null) => {
+                if (date) {
+                  handleMessageTimestampChange(date);
+                  closeDatePicker();
+                }
               }}
               showTimeSelect
               timeFormat="HH:mm"
