@@ -18,6 +18,10 @@ interface AdjustableControlsProps {
   handleChevronRightPaddingChange: (value: number) => void;
   handleOtherSenderMessageChange: (message: string) => void;
   handleSendOtherMessage: () => void;
+  handleIconUpload: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    iconType: string
+  ) => void;
 }
 
 export default function AdjustableControls({
@@ -30,6 +34,7 @@ export default function AdjustableControls({
   handleChevronRightPaddingChange,
   handleOtherSenderMessageChange,
   handleSendOtherMessage,
+  handleIconUpload,
 }: AdjustableControlsProps) {
   return (
     <div className="w-64 p-4 bg-white shadow-lg overflow-y-auto h-screen">
@@ -107,6 +112,30 @@ export default function AdjustableControls({
         >
           Send as 'Other'
         </button>
+      </div>
+      <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
+        Upload Status Icons
+      </h3>
+      <div className="flex flex-col space-y-2">
+        {["paperPlane", "profile", "signal", "wifi", "battery"].map(
+          (iconType) => (
+            <div key={iconType} className="flex items-center">
+              <label
+                htmlFor={`${iconType}Icon`}
+                className="w-24 text-gray-700 capitalize"
+              >
+                {iconType === "paperPlane" ? "Paper Plane" : iconType} Icon:
+              </label>
+              <input
+                type="file"
+                id={`${iconType}Icon`}
+                onChange={(e) => handleIconUpload(e, iconType)}
+                accept="image/*"
+                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              />
+            </div>
+          )
+        )}
       </div>
     </div>
   );

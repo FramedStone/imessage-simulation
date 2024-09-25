@@ -26,6 +26,13 @@ export default function Home() {
     { id: 1, text: "hi", sender: "other" },
     { id: 2, text: "hi", sender: "user" },
   ]);
+  const [icons, setIcons] = useState({
+    paperPlane: null,
+    profile: null,
+    signal: null,
+    wifi: null,
+    battery: null,
+  });
 
   const handlePaddingChange = (key: string, value: number) => {
     setStatusBarPadding((prev) => ({ ...prev, [key]: value }));
@@ -55,6 +62,25 @@ export default function Home() {
     }
   };
 
+  const handleIconUpload = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    iconType: string
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target && typeof e.target.result === "string") {
+          setIcons((prev) => ({
+            ...prev,
+            [iconType]: e.target.result as string,
+          }));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <main className="flex h-screen">
       <AdjustableControls
@@ -67,12 +93,14 @@ export default function Home() {
         handleChevronRightPaddingChange={handleChevronRightPaddingChange}
         handleOtherSenderMessageChange={handleOtherSenderMessageChange}
         handleSendOtherMessage={handleSendOtherMessage}
+        handleIconUpload={handleIconUpload}
       />
       <div className="flex-1 flex flex-col">
         <IMessageHeader
           statusBarPadding={statusBarPadding}
           inputFieldOffset={inputFieldOffset}
           chevronRightPadding={chevronRightPadding}
+          icons={icons}
         />
         <IMessageBody onSendMessage={handleSendMessage} messages={messages} />
       </div>
