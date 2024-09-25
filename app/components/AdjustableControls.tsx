@@ -18,6 +18,7 @@ interface AdjustableControlsProps {
   otherSenderMessage: string;
   statusBarTimestamp: string;
   messageTimestamp: Date;
+  isMessageDelivered: boolean;
   handlePaddingChange: (key: string, value: number) => void;
   handleInputFieldOffsetChange: (value: number) => void;
   handleChevronRightPaddingChange: (value: number) => void;
@@ -29,6 +30,7 @@ interface AdjustableControlsProps {
   ) => void;
   handleStatusBarTimestampChange: (timestamp: string) => void;
   handleMessageTimestampChange: (date: Date | null) => void;
+  handleMessageDeliveryToggle: (isDelivered: boolean) => void;
 }
 
 export default function AdjustableControls({
@@ -38,6 +40,7 @@ export default function AdjustableControls({
   otherSenderMessage,
   statusBarTimestamp,
   messageTimestamp,
+  isMessageDelivered,
   handlePaddingChange,
   handleInputFieldOffsetChange,
   handleChevronRightPaddingChange,
@@ -46,6 +49,7 @@ export default function AdjustableControls({
   handleIconUpload,
   handleStatusBarTimestampChange,
   handleMessageTimestampChange,
+  handleMessageDeliveryToggle,
 }: AdjustableControlsProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -119,14 +123,14 @@ export default function AdjustableControls({
           type="text"
           value={otherSenderMessage}
           onChange={(e) => handleOtherSenderMessageChange(e.target.value)}
-          placeholder="Type a message for &rsquo;other&rsquo;"
+          placeholder="Type a message for 'other'"
           className="w-full p-2 border rounded mb-2 text-black placeholder-gray-500"
         />
         <button
           onClick={handleSendOtherMessage}
           className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         >
-          Send as &rsquo;Other&rsquo;
+          Send as 'Other'
         </button>
       </div>
       <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
@@ -175,6 +179,18 @@ export default function AdjustableControls({
         >
           {messageTimestamp.toLocaleString()}
         </button>
+      </div>
+      <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800">
+        Message Delivery Status
+      </h3>
+      <div className="flex items-center mb-2">
+        <label className="mr-2 text-gray-700">Delivered:</label>
+        <input
+          type="checkbox"
+          checked={isMessageDelivered}
+          onChange={(e) => handleMessageDeliveryToggle(e.target.checked)}
+          className="form-checkbox h-5 w-5 text-blue-600"
+        />
       </div>
 
       {isDatePickerOpen && (

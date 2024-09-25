@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Plus, Mic, ArrowUp } from "lucide-react";
+import { Plus, Mic, ArrowUp, AlertCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Message {
   id: number;
   text: string;
   sender: "user" | "other";
+  delivered: boolean;
 }
 
 interface IMessageBodyProps {
@@ -60,24 +62,50 @@ export default function IMessageBody({
         <div className="text-center text-gray-500 text-sm mb-4">
           {formatMessageTimestamp(messageTimestamp)}
         </div>
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
-              message.sender === "user" ? "justify-end" : "justify-start"
-            } mb-4`}
-          >
-            <div
-              className={`py-2 px-4 max-w-[70%] rounded-3xl ${
-                message.sender === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-black"
-              }`}
+        <AnimatePresence initial={false}>
+          {messages.map((message) => (
+            <motion.div
+              key={message.id}
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+              className={`flex ${
+                message.sender === "user" ? "justify-end" : "justify-start"
+              } mb-1`}
             >
-              <p>{message.text}</p>
-            </div>
-          </div>
-        ))}
+              <div className="relative max-w-[70%]">
+                <div className="flex items-center">
+                  <div
+                    className={`py-2 px-4 rounded-3xl ${
+                      message.sender === "user"
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-black"
+                    }`}
+                  >
+                    <p>{message.text}</p>
+                  </div>
+                  {message.sender === "user" && !message.delivered && (
+                    <div className="ml-2">
+                      <AlertCircle size={20} className="text-red-500" />
+                    </div>
+                  )}
+                </div>
+                {message.sender === "user" && (
+                  <div className="flex items-center mt-0.5 justify-end">
+                    {message.delivered ? (
+                      <span className="text-xs text-gray-500">Delivered</span>
+                    ) : (
+                      <span className="text-xs text-red-500">
+                        Not Delivered
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
         <div ref={messagesEndRef} />
       </div>
       <div className="p-4 border-t">

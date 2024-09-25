@@ -9,6 +9,7 @@ interface Message {
   id: number;
   text: string;
   sender: "user" | "other";
+  delivered: boolean;
 }
 
 export interface Icons {
@@ -31,8 +32,8 @@ export default function Home() {
   const [chevronRightPadding, setChevronRightPadding] = useState(0);
   const [otherSenderMessage, setOtherSenderMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: "hi", sender: "other" },
-    { id: 2, text: "hi", sender: "user" },
+    { id: 1, text: "hi", sender: "other", delivered: true },
+    { id: 2, text: "hi", sender: "user", delivered: true },
   ]);
   const [icons, setIcons] = useState<Icons>({
     paperPlane: null,
@@ -43,6 +44,7 @@ export default function Home() {
   });
   const [statusBarTimestamp, setStatusBarTimestamp] = useState("12:09");
   const [messageTimestamp, setMessageTimestamp] = useState(new Date());
+  const [isMessageDelivered, setIsMessageDelivered] = useState(true);
 
   const handlePaddingChange = (key: string, value: number) => {
     setStatusBarPadding((prev) => ({ ...prev, [key]: value }));
@@ -61,7 +63,12 @@ export default function Home() {
   };
 
   const handleSendMessage = (text: string, sender: "user" | "other") => {
-    const newMessage = { id: messages.length + 1, text, sender };
+    const newMessage = {
+      id: messages.length + 1,
+      text,
+      sender,
+      delivered: isMessageDelivered,
+    };
     setMessages([...messages, newMessage]);
   };
 
@@ -99,6 +106,10 @@ export default function Home() {
     }
   };
 
+  const handleMessageDeliveryToggle = (isDelivered: boolean) => {
+    setIsMessageDelivered(isDelivered);
+  };
+
   return (
     <main className="flex h-screen">
       <AdjustableControls
@@ -108,6 +119,7 @@ export default function Home() {
         otherSenderMessage={otherSenderMessage}
         statusBarTimestamp={statusBarTimestamp}
         messageTimestamp={messageTimestamp}
+        isMessageDelivered={isMessageDelivered}
         handlePaddingChange={handlePaddingChange}
         handleInputFieldOffsetChange={handleInputFieldOffsetChange}
         handleChevronRightPaddingChange={handleChevronRightPaddingChange}
@@ -116,6 +128,7 @@ export default function Home() {
         handleIconUpload={handleIconUpload}
         handleStatusBarTimestampChange={handleStatusBarTimestampChange}
         handleMessageTimestampChange={handleMessageTimestampChange}
+        handleMessageDeliveryToggle={handleMessageDeliveryToggle}
       />
       <div className="flex-1 flex flex-col">
         <IMessageHeader
