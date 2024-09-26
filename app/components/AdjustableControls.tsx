@@ -17,7 +17,7 @@ interface AdjustableControlsProps {
   chevronRightPadding: number;
   otherSenderMessage: string;
   statusBarTimestamp: string;
-  messageTimestamp: Date;
+  messageTimestamp: Date | "now";
   isMessageDelivered: boolean;
   handlePaddingChange: (key: string, value: number) => void;
   handleInputFieldOffsetChange: (value: number) => void;
@@ -29,7 +29,7 @@ interface AdjustableControlsProps {
     iconType: keyof Icons
   ) => void;
   handleStatusBarTimestampChange: (timestamp: string) => void;
-  handleMessageTimestampChange: (date: Date | null) => void;
+  handleMessageTimestampChange: (date: Date | "now") => void;
   handleMessageDeliveryToggle: (isDelivered: boolean) => void;
 }
 
@@ -55,6 +55,12 @@ export default function AdjustableControls({
 
   const openDatePicker = () => setIsDatePickerOpen(true);
   const closeDatePicker = () => setIsDatePickerOpen(false);
+
+  const toggleNowTimestamp = () => {
+    handleMessageTimestampChange(
+      messageTimestamp === "now" ? new Date() : "now"
+    );
+  };
 
   return (
     <div className="w-full p-6 bg-white shadow-lg overflow-y-auto h-screen">
@@ -200,9 +206,17 @@ export default function AdjustableControls({
         <div className="flex items-center mb-4">
           <button
             onClick={openDatePicker}
-            className="w-full p-2 border rounded text-black bg-white hover:bg-gray-100"
+            className="w-full p-2 border rounded text-black bg-white hover:bg-gray-100 mr-2"
           >
-            {messageTimestamp.toLocaleString()}
+            {messageTimestamp === "now"
+              ? "Now"
+              : messageTimestamp.toLocaleString()}
+          </button>
+          <button
+            onClick={toggleNowTimestamp}
+            className="p-2 border rounded text-black bg-white hover:bg-gray-100"
+          >
+            {messageTimestamp === "now" ? "Set Date" : "Set Now"}
           </button>
         </div>
       </section>
@@ -226,7 +240,9 @@ export default function AdjustableControls({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg">
             <DatePicker
-              selected={messageTimestamp}
+              selected={
+                messageTimestamp === "now" ? new Date() : messageTimestamp
+              }
               onChange={(date: Date | null) => {
                 if (date) {
                   handleMessageTimestampChange(date);

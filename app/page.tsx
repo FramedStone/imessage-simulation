@@ -44,7 +44,9 @@ export default function Home() {
     battery: null,
   });
   const [statusBarTimestamp, setStatusBarTimestamp] = useState("12:09");
-  const [messageTimestamp, setMessageTimestamp] = useState(new Date());
+  const [messageTimestamp, setMessageTimestamp] = useState<Date | "now">(
+    new Date()
+  );
   const [isMessageDelivered, setIsMessageDelivered] = useState(true);
 
   const handlePaddingChange = (key: string, value: number) => {
@@ -101,10 +103,8 @@ export default function Home() {
     setStatusBarTimestamp(timestamp);
   };
 
-  const handleMessageTimestampChange = (date: Date | null) => {
-    if (date) {
-      setMessageTimestamp(date);
-    }
+  const handleMessageTimestampChange = (date: Date | "now") => {
+    setMessageTimestamp(date);
   };
 
   const handleMessageDeliveryToggle = (isDelivered: boolean) => {

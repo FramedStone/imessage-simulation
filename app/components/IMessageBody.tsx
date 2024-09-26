@@ -14,7 +14,7 @@ interface Message {
 interface IMessageBodyProps {
   onSendMessage: (text: string, sender: "user") => void;
   messages: Message[];
-  messageTimestamp: Date;
+  messageTimestamp: Date | "now";
 }
 
 export default function IMessageBody({
@@ -44,8 +44,11 @@ export default function IMessageBody({
     }
   };
 
-  const formatMessageTimestamp = (date: Date) => {
-    return date.toLocaleString("en-US", {
+  const formatMessageTimestamp = (timestamp: Date | "now") => {
+    if (timestamp === "now") {
+      return "Now";
+    }
+    return timestamp.toLocaleString("en-US", {
       weekday: "short",
       month: "short",
       day: "numeric",
