@@ -112,8 +112,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col md:flex-row min-h-screen">
-      <div className="w-full md:w-1/3 p-4">
+    <main className="flex flex-col lg:flex-row min-h-screen">
+      <div className="w-full lg:w-2/5 xl:w-1/3 p-4 bg-gray-100 overflow-y-auto">
         <AdjustableControls
           statusBarPadding={statusBarPadding}
           inputFieldOffset={inputFieldOffset}
@@ -133,7 +133,7 @@ export default function Home() {
           handleMessageDeliveryToggle={handleMessageDeliveryToggle}
         />
       </div>
-      <div className="w-full md:w-2/3 flex justify-center items-center">
+      <div className="w-full lg:w-3/5 xl:w-2/3 flex justify-center items-center bg-white">
         <IPhoneWrapper>
           <div className="flex-1 flex flex-col h-full">
             <IMessageHeader
