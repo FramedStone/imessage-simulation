@@ -112,41 +112,45 @@ export default function Home() {
   };
 
   return (
-    <main className="flex h-screen">
-      <AdjustableControls
-        statusBarPadding={statusBarPadding}
-        inputFieldOffset={inputFieldOffset}
-        chevronRightPadding={chevronRightPadding}
-        otherSenderMessage={otherSenderMessage}
-        statusBarTimestamp={statusBarTimestamp}
-        messageTimestamp={messageTimestamp}
-        isMessageDelivered={isMessageDelivered}
-        handlePaddingChange={handlePaddingChange}
-        handleInputFieldOffsetChange={handleInputFieldOffsetChange}
-        handleChevronRightPaddingChange={handleChevronRightPaddingChange}
-        handleOtherSenderMessageChange={handleOtherSenderMessageChange}
-        handleSendOtherMessage={handleSendOtherMessage}
-        handleIconUpload={handleIconUpload}
-        handleStatusBarTimestampChange={handleStatusBarTimestampChange}
-        handleMessageTimestampChange={handleMessageTimestampChange}
-        handleMessageDeliveryToggle={handleMessageDeliveryToggle}
-      />
-      <IPhoneWrapper>
-        <div className="flex-1 flex flex-col h-full">
-          <IMessageHeader
-            statusBarPadding={statusBarPadding}
-            inputFieldOffset={inputFieldOffset}
-            chevronRightPadding={chevronRightPadding}
-            icons={icons}
-            statusBarTimestamp={statusBarTimestamp}
-          />
-          <IMessageBody
-            onSendMessage={handleSendMessage}
-            messages={messages}
-            messageTimestamp={messageTimestamp}
-          />
-        </div>
-      </IPhoneWrapper>
+    <main className="flex flex-col md:flex-row min-h-screen">
+      <div className="w-full md:w-1/3 p-4">
+        <AdjustableControls
+          statusBarPadding={statusBarPadding}
+          inputFieldOffset={inputFieldOffset}
+          chevronRightPadding={chevronRightPadding}
+          otherSenderMessage={otherSenderMessage}
+          statusBarTimestamp={statusBarTimestamp}
+          messageTimestamp={messageTimestamp}
+          isMessageDelivered={isMessageDelivered}
+          handlePaddingChange={handlePaddingChange}
+          handleInputFieldOffsetChange={handleInputFieldOffsetChange}
+          handleChevronRightPaddingChange={handleChevronRightPaddingChange}
+          handleOtherSenderMessageChange={handleOtherSenderMessageChange}
+          handleSendOtherMessage={handleSendOtherMessage}
+          handleIconUpload={handleIconUpload}
+          handleStatusBarTimestampChange={handleStatusBarTimestampChange}
+          handleMessageTimestampChange={handleMessageTimestampChange}
+          handleMessageDeliveryToggle={handleMessageDeliveryToggle}
+        />
+      </div>
+      <div className="w-full md:w-2/3 flex justify-center items-center">
+        <IPhoneWrapper>
+          <div className="flex-1 flex flex-col h-full">
+            <IMessageHeader
+              statusBarPadding={statusBarPadding}
+              inputFieldOffset={inputFieldOffset}
+              chevronRightPadding={chevronRightPadding}
+              icons={icons}
+              statusBarTimestamp={statusBarTimestamp}
+            />
+            <IMessageBody
+              onSendMessage={handleSendMessage}
+              messages={messages}
+              messageTimestamp={messageTimestamp}
+            />
+          </div>
+        </IPhoneWrapper>
+      </div>
     </main>
   );
 }
