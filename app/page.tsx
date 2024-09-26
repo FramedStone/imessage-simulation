@@ -32,10 +32,7 @@ export default function Home() {
   const [inputFieldOffset, setInputFieldOffset] = useState(0);
   const [chevronRightPadding, setChevronRightPadding] = useState(0);
   const [otherSenderMessage, setOtherSenderMessage] = useState("");
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: "hi", sender: "other", delivered: true },
-    { id: 2, text: "hi", sender: "user", delivered: true },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [icons, setIcons] = useState<Icons>({
     paperPlane: null,
     profile: null,
